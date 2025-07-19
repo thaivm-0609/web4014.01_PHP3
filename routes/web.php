@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /**tenMethod: phương thức truyền tải dữ liệu: 
@@ -23,12 +23,13 @@ Route::get('/home', [HomeController::class, 'home']);
 //prefix: tiền tố
 Route::prefix('/admin')->group(function () {
     Route::get('/', []); //url: /admin
-    Route::prefix('/products')->group(function () {
-        Route::get('/', [ProductController::class, 'list']); //url: /admin/products
-        Route::get('/create', [ProductController::class, 'create']); //url: /admin/products/create
-        //thêm tham số vào trong url: /{tenThamSo};
-        Route::get('/update/{productId}', [ProductController::class, 'update']); //url: /admin/products/update/{id}
-    });
+    Route::resource('/products', ProductController::class);
+    // Route::prefix('/products')->group(function () {
+    //     Route::get('/', [ProductController::class, 'list']); //url: /admin/products
+    //     Route::get('/create', [ProductController::class, 'create']); //url: /admin/products/create
+    //     //thêm tham số vào trong url: /{tenThamSo};
+    //     Route::get('/update/{productId}', [ProductController::class, 'update']); //url: /admin/products/update/{id}
+    // });
     Route::prefix('/users')->group(function () {
         Route::get('/', []); //url: /admin/users
         Route::get('/create', []); //url: /admin/users/create
