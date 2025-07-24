@@ -7,13 +7,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <div class="container-fluid p-5 bg-primary text-white text-center">
         <h1>PHP3 - WEB4014.01</h1>
         <p>Resize this responsive page to see the effect!</p> 
     </div>
     
-    <div class="container mt-5">
+    <div class="container my-5">
         <!-- phần nội dung thay đổi khi chuyển trang -->
         @yield('content')
     </div>
