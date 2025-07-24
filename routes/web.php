@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Client\ProductController as ClientProductController;
 use Illuminate\Support\Facades\Route;
 
 /**tenMethod: phương thức truyền tải dữ liệu: 
@@ -12,12 +13,13 @@ use Illuminate\Support\Facades\Route;
 */
 //Truong hop 1: tra thang ve giao dien, khong qua xu ly logic
 //Route::tenMethod('/url', function() { return view('tenView'); }); 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 //Truong hop 2: goi sang controller
 //Route::tenMethod('/url', [TenController::class, 'tenFunction']);
+Route::get('/', [ClientProductController::class, 'list']);
 Route::get('/home', [HomeController::class, 'home']);
 
 //prefix: tiền tố
