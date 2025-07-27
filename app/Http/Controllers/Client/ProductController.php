@@ -15,12 +15,14 @@ class ProductController extends Controller
         $products->load('brand');
         
         // return view('clients.products', ['products' => $products]); 
-        return view('clients.products', compact('products'));
+        return view('clients.products.list', compact('products'));
     }
 
-    public function detail($id)
+    // public function detail($id)
+    public function detail(Product $product) //su dung ModelBinding
     {
-        dd($id);
-        return 'Chỉnh sửa';
+        $product->load('brand');
+
+        return view('clients.products.detail', compact('product'));
     }
 }

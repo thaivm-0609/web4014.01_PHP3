@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -21,22 +22,19 @@ class ProductController extends Controller
         //sắp xếp (có 2 cách viết): orderBy('tenTruong','asc'); orderByDesc('tenTruong')
         //limit(x): giới hạn x bản ghi trả về
         
-        $product = Product::where('status', 0)
-            ->orderByDesc('id') 
-            ->limit(2)
-            ->get(); 
+        $products = Product::orderByDesc('id')->get(); 
         /**
          * load(): dùng để load dữ liệu của những bảng khóa ngoại
          * - lấy 1 relation: load('tenRelation')
          * - lấy nhiều relation: load(['tenRelation1', 'tenRelation2'])
          */
-        $product->load('brand');
+        $products->load('brand');
 
         //first(): lấy bản ghi đầu tiên
         //all()->last(): lấy bản ghi cuối cùng
         // $product = Product::all()->last();
 
-        dd($product);
+        return view('admin.products.list', compact('products'));
     }
 
     /**
@@ -44,7 +42,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::all();
+
+        return view('admin.products.create', compact('brands'));
     }
 
     /**
@@ -52,7 +52,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //lấy dữ liệu được gửi qua $request
+        $data = [
+            'name' => $request->input('name'),
+            'quantity' => $request->input('quantity'),
+            'price' => $request->input('price'),
+            'image' => $request->input('image'),
+            'status' => $request->input('status'),
+            'brand_id' => $request->input('brand_id'),
+        ];
+
+        Product::create($data); //lưu dữ liệu mới vào db
+
+        return redirect()->route('products.index'); //điều hướng ng dùng về trang danh sách
     }
 
     /**
