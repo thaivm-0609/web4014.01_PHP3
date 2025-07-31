@@ -84,24 +84,38 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product) //Model Binding
     {
-        //
+        $brands = Brand::all();
+
+        return view('admin.products.edit', compact('product', 'brands'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        //update dữ liệu vào db
+        $product->fill([
+          'name' => $request->input('name'), 
+          'price' => $request->input('price'),  
+          'quantity' => $request->input('quantity'),  
+          'status' => $request->input('status'),  
+          'brand_id' => $request->input('brand_id'),  
+          'image' => $request->input('image')
+        ])->save();
+
+        return redirect()->route('products.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete(); //xóa bản ghi
+
+        return redirect()->route('products.index');
     }
 }

@@ -9,7 +9,9 @@
                 <th>Image</th>
                 <th>Price</th>
                 <th>Quantity</th>
+                <th>Status</th>
                 <th>Brand</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +22,16 @@
                     <td><img src="{{$p->image}}" alt=""></td>
                     <td>{{$p->price}}</td>
                     <td>{{$p->quantity}}</td>
+                    <td>{{$p->status}}</td>
                     <td>{{$p->brand->name}}</td>
+                    <td>
+                        <a href="{{ route('products.edit', $p->id) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('products.destroy', $p->id) }}" method="POST">
+                            @csrf 
+                            @method('DELETE')
+                            <button class="btn btn-danger" onClick="return confirm('Bạn có chắc không?')">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
