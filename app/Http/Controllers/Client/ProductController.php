@@ -23,6 +23,12 @@ class ProductController extends Controller
     {
         $product->load('brand');
 
-        return view('clients.products.detail', compact('product'));
+        $relatedProducts = Product::where('brand_id', $product->brand_id)
+            ->where('id', '!=', $product->id)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+            
+        return view('clients.products.detail', compact('product', 'relatedProducts'));
     }
 }
