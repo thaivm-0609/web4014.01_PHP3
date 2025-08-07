@@ -25,7 +25,18 @@ class ApiProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //lấy dữ liệu được gửi qua $request
+        $data = [
+            'name' => $request->input('name'),
+            'quantity' => $request->input('quantity'),
+            'price' => $request->input('price'),
+            'image' => $request->input('image'),
+            'status' => $request->input('status'),
+            'brand_id' => $request->input('brand_id'),
+        ];
+        $newProduct = Product::create($data); //lưu dữ liệu mới vào db
+
+        return response()->json($newProduct);
     }
 
     /**
@@ -41,16 +52,28 @@ class ApiProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        //update dữ liệu vào db
+        $product->fill([
+          'name' => $request->input('name'), 
+          'price' => $request->input('price'),  
+          'quantity' => $request->input('quantity'),  
+          'status' => $request->input('status'),  
+          'brand_id' => $request->input('brand_id'),  
+          'image' => $request->input('image')
+        ])->save();
+
+        return response()->json("Cập nhật thành công");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return response()->json("Xóa thành công");
     }
 }
